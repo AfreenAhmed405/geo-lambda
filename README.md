@@ -1,9 +1,6 @@
 # Lambda Geospatial Processing API
 
-This AWS Lambda function processes geospatial data files (Shapefiles, GeoTIFFs, and PNG previews) for a given area defined by a GeoJSON clip. It performs clipping, masking, and generates both raster and vector outputs, which are automatically uploaded to S3.
-
-- Had permission to share as this code is no longer in use.
-
+This AWS Lambda function processes geospatial data files (Shapefiles, GeoTIFFs, and PNG previews) for a given area defined by a GeoJSON clip. It performs clipping, masking, and generates both raster and vector outputs, which are automatically uploaded to S3 and publishes results to SNS.
 
 ---
 
