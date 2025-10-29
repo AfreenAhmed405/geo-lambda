@@ -161,12 +161,12 @@ def process_geospatial_job(job_input):
 
     # Upload files
     urls = {
+        "job_id": job_input["job_id"],
         "geojson_s3": upload_to_s3(geojson_out, geojson_filename),
         "tif_s3": upload_to_s3(tif_out_path, os.path.basename(tif_out_path)),
         "png_s3": upload_to_s3(png_out_path, os.path.basename(png_out_path)),
         "zip_s3": upload_to_s3(zip_path, os.path.basename(zip_path)),
-        "bounds": get_transformed_geo_bounds(tif_out_path),
-        "geojson_result": clipped.to_json()
+        "bounds": get_transformed_geo_bounds(tif_out_path)
     }
 
     print("==> Uploaded files to S3")
