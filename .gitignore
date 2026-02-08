@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Cache and temp data
+cache/
+*.json
+*.log
+*.tmp
+*.bak
+
+# Virtual environments
+.venv/
+.env.*
+venv/
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Docker artifacts (optional)
+*.pid
+*.tar
+*.img
+
+# Python packaging
+dist/
+build/
+*.egg-info/
+
+# Ignore sensitive config files if any
+.env

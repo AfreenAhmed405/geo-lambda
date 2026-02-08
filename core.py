@@ -28,6 +28,15 @@ def mask_black_with_transparent(output_path):
     img.putdata(new_data)
     img.save(output_path, "PNG")
 
+def mask_white_with_transparent(output_path):
+    img = Image.open(output_path).convert("RGBA")
+    new_data = [
+        (0, 0, 0, 0) if item[:3] == (255, 255, 255) else item
+        for item in img.getdata()
+    ]
+    img.putdata(new_data)
+    img.save(output_path, "PNG")
+
 def get_transformed_geo_bounds(tif_path, target_epsg=4326):
     with rasterio.open(tif_path) as src:
         bounds = src.bounds
@@ -130,12 +139,13 @@ def process_geospatial_job(job_input):
     with rasterio.open(raster_path) as src:
         clip_gdf = clip_gdf.to_crs(src.crs)
         geometry = [json.loads(clip_gdf.to_json())['features'][0]['geometry']]
-        out_image, out_transform = mask(src, geometry, crop=True)
+        out_image, out_transform = mask(src, geometry, crop=True, filled=False)
         out_meta = src.meta.copy()
         out_meta.update({
             "height": out_image.shape[1],
             "width": out_image.shape[2],
-            "transform": out_transform
+            "transform": out_transform,
+            "nodata": src.nodata if src.nodata is not None else 0
         })
 
         tif_out_path = os.path.join(tmp_dir, f"sri_{req_id}.tif")
@@ -156,6 +166,7 @@ def process_geospatial_job(job_input):
     png_out_path = os.path.join(tmp_dir, f"sri_{req_id}.png")
     img.save(png_out_path)
     mask_black_with_transparent(png_out_path)
+    mask_white_with_transparent(png_out_path)
 
     print("==> Created PNG preview")
 
