@@ -16,8 +16,8 @@ Image.MAX_IMAGE_PIXELS = None
 
 def upload_to_s3(file_path, s3_filename, bucket="ml-inference-output"):
     s3 = boto3.client("s3")
-    s3.upload_file(file_path, bucket, f"uploads/{s3_filename}")
-    return f"https://{bucket}.s3.amazonaws.com/uploads/{s3_filename}"
+    s3.upload_file(file_path, bucket, f"outputs/{s3_filename}")
+    return f"https://{bucket}.s3.amazonaws.com/outputs/{s3_filename}"
 
 def mask_black_with_transparent(output_path):
     img = Image.open(output_path).convert("RGBA")
